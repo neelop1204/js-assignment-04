@@ -6,16 +6,15 @@ document.addEventListener('DOMContentLoaded', () => {
     studentInfo.textContent = `Student ID: ${myStudentID}, Name: ${myName}`;
 
     const apiKey = 'ca53be9d36e0d5ae661fa891d73f2e73';
-    const city = 'Barrie';
-    const countryCode = 'CA';
-    const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city},${countryCode}&appid=${apiKey}&units=metric`;
-
-    const fetchDataButton = document.getElementById('fetch-data-btn');
-    const weatherInfo = document.getElementById('weather-info');
-    const cityLocation = document.getElementById('city-location');
-    const mapImage = document.getElementById('map-image');
+    let cityInput = document.getElementById('city-input');
+    let fetchDataButton = document.getElementById('fetch-data-btn');
+    let weatherInfo = document.getElementById('weather-info');
+    let cityLocation = document.getElementById('city-location');
 
     fetchDataButton.addEventListener('click', () => {
+        const city = cityInput.value.trim();
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
         fetch(apiUrl)
         .then(response => {
             if (!response.ok) {
@@ -57,10 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <i class="fas fa-cloud-sun"></i> <strong>Cloudiness:</strong> ${cloudiness}%
             `;
 
-            cityLocation.textContent = `Location: ${city}, ${countryCode}`;
-
-            const yourImageUrl = 'img/Screenshot 2024-04-14 163102.png'; 
-            mapImage.src = yourImageUrl;
+            cityLocation.textContent = `Location: ${city}`;
         })
         .catch(error => {
             console.error('Error fetching data:', error);
